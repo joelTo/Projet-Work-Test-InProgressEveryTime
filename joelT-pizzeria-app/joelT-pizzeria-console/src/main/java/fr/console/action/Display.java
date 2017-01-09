@@ -1,5 +1,6 @@
 package fr.console.action;
 
+import fr.exception.ListException;
 import fr.ihm.action.Action;
 import fr.ihm.action.IhmUtil;
 
@@ -23,13 +24,14 @@ public class Display extends Action {
 	 */
 	@Override
 	public void doAction() {
+		try {
+			ihmUtil.getPizzaDao().findall();
+		} catch (ListException e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.console.action.Action#descriptionAction()
-	 */
 	@Override
 	public void descriptionAction() {
 	}

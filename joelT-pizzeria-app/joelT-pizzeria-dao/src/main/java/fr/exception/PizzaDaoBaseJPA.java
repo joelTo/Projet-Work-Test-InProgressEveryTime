@@ -18,10 +18,10 @@ public class PizzaDaoBaseJPA implements PizzaDaoFactory {
 	private EntityManager em;
 
 	@Override
-	public List<Pizza> findall() throws BaseJDBCException {
-			em = emf.createEntityManager();
-			TypedQuery<Pizza> empizza = em.createQuery("SELECT p FROM Pizza p", Pizza.class);
-			return empizza.getResultList();
+	public List<Pizza> findall() throws ListException {
+		em = emf.createEntityManager();
+		TypedQuery<Pizza> empizza = em.createQuery("SELECT p FROM Pizza p", Pizza.class);
+		return empizza.getResultList();
 	}
 
 	@Override

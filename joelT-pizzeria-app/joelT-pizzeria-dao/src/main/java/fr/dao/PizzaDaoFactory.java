@@ -2,8 +2,8 @@ package fr.dao;
 
 import java.util.List;
 
-import fr.exception.BaseJDBCException;
 import fr.exception.DeletePizzaException;
+import fr.exception.ListException;
 import fr.exception.SavePizzaException;
 import fr.exception.UpdatesPizzaException;
 import fr.model.Pizza;
@@ -20,7 +20,7 @@ public interface PizzaDaoFactory {
 	/*
 	 * Fonction correspondant à (Read) : lecture de la liste des pizza
 	 */
-	List<Pizza> findall() throws BaseJDBCException;
+	List<Pizza> findall() throws ListException;
 
 	/*
 	 * Fonction correspondant à (Create) : sauver une pizza

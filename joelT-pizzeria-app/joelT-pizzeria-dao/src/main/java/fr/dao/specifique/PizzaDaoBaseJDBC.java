@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import fr.dao.PizzaDaoFactory;
 import fr.exception.BaseJDBCException;
 import fr.exception.DeletePizzaException;
+import fr.exception.ListException;
 import fr.exception.SavePizzaException;
 import fr.exception.UpdatesPizzaException;
 import fr.model.CategoriePizza;
@@ -66,21 +67,26 @@ public class PizzaDaoBaseJDBC implements PizzaDaoFactory {
 		}
 
 	}
+
 	@Override
-	public List<Pizza> findall() throws BaseJDBCException {
-		return execute((Statement statement) -> {
-			List<Pizza> pizzas = new ArrayList<>();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM PIZZA");
-			while (resultSet.next()) {
-				int id = resultSet.getInt("ID");
-				String code = resultSet.getString("code");
-				String nom = resultSet.getString("nom");
-				Double prix = resultSet.getDouble("prix");
-				String categorie = resultSet.getString("categoriePizza");
-				pizzas.add(new Pizza(id, code, nom, CategoriePizza.valueOf(categorie), prix));
-			}
-			return pizzas;
-		});
+	public List<Pizza> findall() throws ListException {
+		try {
+			return execute((Statement statement) -> {
+				List<Pizza> pizzas = new ArrayList<>();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM PIZZA");
+				while (resultSet.next()) {
+					int id = resultSet.getInt("ID");
+					String code = resultSet.getString("code");
+					String nom = resultSet.getString("nom");
+					Double prix = resultSet.getDouble("prix");
+					String categorie = resultSet.getString("categoriePizza");
+					pizzas.add(new Pizza(id, code, nom, CategoriePizza.valueOf(categorie), prix));
+				}
+				return pizzas;
+			});
+		} catch (BaseJDBCException e) {
+			throw new ListException(e);
+		}
 	}
 
 	@Override
